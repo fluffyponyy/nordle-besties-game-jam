@@ -26,7 +26,7 @@ def toStrKey(str):
 
 def toScore(list):
     score = 0
-    score += list[0] * 2 #each green is worth two score points
+    score += list[0] * 1 #each green is worth two score points
     score += list[1] #each yellow is worth one score point
     return score
 
@@ -110,7 +110,7 @@ def getPattern(guess, remaining_candidates):
 def getMessage(won, lost):
     playing_messsages = ["Oof.", "Unlucky.", "Try again.", "You suck at this.", "Mid.", "Cringe.", "Get good.", "I hate that.", "You need to try harder.", "Wrong.", "Supes wrong."]
     if won:
-        return "You finally did it. Press 'enter' to play again. "
+        return "Finally. Press 'enter' to play again. "
     elif lost:
         return "Unforch. Press 'enter' to retry. "
     else:

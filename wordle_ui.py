@@ -12,7 +12,7 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREY = (120, 124, 126)
 DARK_GREY = (60, 60, 60) # For empty grid cells
-GREEN = (106, 170, 100)
+GREEN = (255, 15, 155) #change to pink
 YELLOW = (201, 180, 88)
 DEFAULT_BG = (18, 18, 19)
 
@@ -137,6 +137,7 @@ class WordleUI:
         current_guess_str = current_guess_str.upper() #for keyboard_colors to work
         is_game_over_lose = self.current_attempt == 5 and results.count(GREEN) < 5 
         is_game_over_win = results.count(GREEN) == 5 
+        #BUG with keyboard colors: if two of the same letter in guess, gives color of second letter and not of first
         formatted_results = {
             "tile_colors": [GREY if x == DARK_GREY else x for x in results ],
             "keyboard_colors": {current_guess_str[0]: results[0], current_guess_str[1]: results[1], current_guess_str[2]: results[2], current_guess_str[3]: results[3], current_guess_str[4]: results[4]},
@@ -209,7 +210,7 @@ def draw_grid(screen, ui):
             letter = ui.guesses[row][col]
             if letter:
                 text_surface = LETTER_FONT.render(letter, True, WHITE)
-                text_rect = text_surface.get_rect(center=cell_rect.center)
+                text_rect = text_surface.get_rect(center=(cell_rect.center[0]+2, cell_rect.center[1]-5))
                 screen.blit(text_surface, text_rect)
 
 def draw_keyboard(screen, ui):
@@ -218,7 +219,7 @@ def draw_keyboard(screen, ui):
         pygame.draw.rect(screen, color, rect, border_radius=5)
 
         text_surface = KEYBOARD_FONT.render(letter, True, WHITE)
-        text_rect = text_surface.get_rect(center=rect.center)
+        text_rect = text_surface.get_rect(center=(rect.center[0]+2, rect.center[1]-5))
         screen.blit(text_surface, text_rect)
 
 def draw_header_and_messages(screen, ui):
@@ -240,13 +241,14 @@ def main():
 
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.display.set_caption("PyWordle UI")
+    pygame.display.set_caption("Nordle")
     clock = pygame.time.Clock()
 
     # Initialize fonts
-    LETTER_FONT = pygame.font.Font(None, 50)
-    KEYBOARD_FONT = pygame.font.Font(None, 33)
-    TITLE_FONT = pygame.font.Font(None, 50)
+    font_path = "C:/Users/bo_an/AppData/Roaming/itch/apps/humble-fonts-gold/hf-gold-complete/hope-gold-v1/HopeGold.ttf"
+    LETTER_FONT = pygame.font.Font(font_path, 55)
+    KEYBOARD_FONT = pygame.font.Font(font_path, 40)
+    TITLE_FONT = pygame.font.Font(font_path, 55)
 
     # Create the UI object
     ui = WordleUI()

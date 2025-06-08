@@ -130,7 +130,7 @@ class WordleUI:
         is_game_over_win = results.count(GREEN) == 5 
         formatted_results = {
             "tile_colors": [GREY if x == DARK_GREY else x for x in results ],
-            "keyboard_colors": {current_guess_str[0]: results[0], current_guess_str[1]: results[1], current_guess_str[2]: results[2], current_guess_str[3]: results[3], current_guess_str[4]: results[4]},
+            "keyboard_colors": [[current_guess_str[0], results[0]], [current_guess_str[1], results[1]], [current_guess_str[2], results[2]], [current_guess_str[3], results[3]], [current_guess_str[4], results[4]]],
             "message": nordle.getMessage(is_game_over_win, is_game_over_lose),
             "game_over": is_game_over_win or is_game_over_lose
         }
@@ -147,7 +147,8 @@ class WordleUI:
         self.tile_colors[self.current_attempt] = tile_colors
         
         # Update keyboard colors based on the new information, except if the information is a downgrade
-        for letter, color in keyboard_updates.items():
+        for pair in keyboard_updates:
+            letter, color = pair[0], pair[1]
             if self.keyboard_colors[letter] == GREY or (self.keyboard_colors[letter] == YELLOW and color == GREEN):
                 self.keyboard_colors[letter] = color
             

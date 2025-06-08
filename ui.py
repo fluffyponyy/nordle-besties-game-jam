@@ -1,6 +1,9 @@
 import pygame
 import nordle
 
+pygame.init()
+
+
 # --- [1] UI SETUP AND CONSTANTS: Edit these to change the look of the game ---
 
 # Screen dimensions
@@ -16,10 +19,11 @@ GREEN = (255, 15, 155) #change to pink
 YELLOW = (201, 180, 88)
 DEFAULT_BG = (18, 18, 19)
 
-# Fonts (will be initialized later)
-LETTER_FONT = None
-KEYBOARD_FONT = None
-TITLE_FONT = None
+# Initialize fonts
+font_path = "./HopeGold.ttf"
+LETTER_FONT = pygame.font.Font(font_path, 55)
+KEYBOARD_FONT = pygame.font.Font(font_path, 40)
+TITLE_FONT = pygame.font.Font(font_path, 55)
 
 # Grid settings
 CELL_SIZE = 50
@@ -227,6 +231,10 @@ def draw_header_and_messages(screen, ui):
     title_surface = TITLE_FONT.render("NORDLE", True, WHITE)
     title_rect = title_surface.get_rect(center=(SCREEN_WIDTH // 2, 50))
     screen.blit(title_surface, title_rect)
+
+    img = pygame.image.load('heart.png')
+    screen.blit(img,(SCREEN_WIDTH // 3 , 38))
+    screen.blit(img,(SCREEN_WIDTH // 1.635 , 38))
     
     # Game message
     if ui.message:
@@ -234,44 +242,6 @@ def draw_header_and_messages(screen, ui):
         msg_rect = msg_surface.get_rect(center=(SCREEN_WIDTH // 2, GRID_START_Y + 365))
         screen.blit(msg_surface, msg_rect)
 
-# --- [4] MAIN GAME LOOP ---
 
-def main():
-    global LETTER_FONT, KEYBOARD_FONT, TITLE_FONT
 
-    pygame.init()
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.display.set_caption("Nordle")
-    clock = pygame.time.Clock()
 
-    # Initialize fonts
-    font_path = "C:/Users/bo_an/AppData/Roaming/itch/apps/humble-fonts-gold/hf-gold-complete/hope-gold-v1/HopeGold.ttf"
-    LETTER_FONT = pygame.font.Font(font_path, 55)
-    KEYBOARD_FONT = pygame.font.Font(font_path, 40)
-    TITLE_FONT = pygame.font.Font(font_path, 55)
-
-    # Create the UI object
-    ui = WordleUI()
-    
-    running = True
-    while running:
-        # Event handling
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            # Pass all events to the UI handler
-            ui.handle_input(event)
-
-        # Drawing calls
-        screen.fill(DEFAULT_BG)
-        draw_header_and_messages(screen, ui)
-        draw_grid(screen, ui)
-        draw_keyboard(screen, ui)
-        
-        pygame.display.flip()
-        clock.tick(60)
-
-    pygame.quit()
-
-if __name__ == "__main__":
-    main()

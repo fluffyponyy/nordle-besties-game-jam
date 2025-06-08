@@ -64,30 +64,30 @@ def compareWords(secret, guess):
     counts = [0, 0, 0] # # of greens, yellows, greys in that order
     greens = []
     yellows = []
-    for i in range(word_length):
-        if secret[i] == guess[i]: #case 1; matching greens right off the bat
+    greys = []
+
+    for i in range(word_length): #check for greens first
+        if secret[i] == guess[i]:
             pattern[i] = "g"
+            greens.append(i)
             counts[0] += 1
-            greens.append(i) #indices of the secret word that do not need to be checked anymore
         else:
-            allIndexes = getIndexes(secret, guess[i])
-            if len(allIndexes) != 0: #if any indexes of current guess letter are found
-                for index in allIndexes:
+            greys.append(i)
+    for i in greys:
+        allIndexes = getIndexes(secret, guess[i])
+        if len(allIndexes) != 0:
+            for index in allIndexes:
                     if index not in greens and index not in yellows:
                         pattern[i] = "y"
                         counts[1] += 1
                         yellows.append(index)
                     else:
                         pattern[i] = "b"
-            #other cases: 
-            #letter appears in the secret word somewhere else; using E
-                #it appears once in your word and once in the secret word eg PASTE vs EARTH
-            #it appears >1x in your word and once in the secret word eg TEENY vs EARTH or MELEE vs TEENY (more in your word than in secret word)
-                #it appears once in your word and >1x in the secret word eg EARTH vs TEENY
-            else:
+        else:
                 pattern[i] = "b"
                 counts[2] += 1
     return pattern, counts
+
 
 def getPattern(guess, remaining_candidates):
     if isValidWord(guess):

@@ -26,7 +26,7 @@ def toStrKey(str):
 
 def toScore(list):
     score = 0
-    score += list[0] * 1 #each green is worth two score points
+    score += list[0] * 1 #each green is worth one score points
     score += list[1] #each yellow is worth one score point
     return score
 
@@ -98,7 +98,6 @@ def getPattern(guess, remaining_candidates):
         if len(minBuckets) == 1: #if only one possible bucket remains
             remaining_candidates = minBuckets[remaining_keys[0]]
         else:
-            print(len(minBuckets))
             remaining_candidates = minBuckets[remaining_keys[random.randint(0, (len(minBuckets))-1)]]
 
         print(remaining_candidates)

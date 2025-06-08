@@ -107,7 +107,7 @@ def getPattern(guess, remaining_candidates):
         return -1
 
 def getMessage(won, lost):
-    playing_messsages = ["Oof.", "Unlucky.", "Try again.", "You suck at this.", "Mid.", "Cringe.", "Get good.", "I hate that.", "You need to try harder.", "Wrong.", "Supes wrong."]
+    playing_messsages = ["Oof.", "Unlucky.", "Try again.", "You suck at this.", "Mid.", "Cringe.", "Get good.", "I hate that.", "You need to try harder.", "Wrong.", "Supes wrong.", "Bad guess.", "Pathetic.", "Bad.", "Incorrect.", "Foul attempt.", "Bad one innit.", "Again."]
     if won:
         return "Finally. Press 'enter' to play again. "
     elif lost:

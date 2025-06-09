@@ -162,8 +162,7 @@ class WordleUI:
         # Update keyboard colors based on the new information, except if the information is a downgrade
         for pair in keyboard_updates:
             letter, color = pair[0], pair[1]
-            print(letter, color)
-
+            
             cur_color = self.keyboard_colors[letter]
             if cur_color == GREY or cur_color == DARK_GREY or (cur_color == YELLOW and color == GREEN):
                 self.keyboard_colors[letter] = color

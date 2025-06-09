@@ -50,7 +50,7 @@ def computeBuckets(guess, word_list): #also should insert into hierarchy of buck
 
 def getIndexes(word, letter):
     indexes = []
-    for i in range(word_length):
+    for i in range(0, word_length):
         if word[i] == letter:
             indexes.append(i)
     return indexes
@@ -60,13 +60,13 @@ def compareWords(secret, guess):
     'g' or green represents a letter in the correct place
     'y' or yellow represents a letter that is in the secret word but a different place
     'b' or black (grey in original) represents a letter that is not in the secret word'''
-    pattern = [0, 0, 0, 0, 0]
+    pattern = ['b', 'b', 'b', 'b', 'b']
     counts = [0, 0, 0] # # of greens, yellows, greys in that order
     greens = []
     yellows = []
     greys = []
 
-    for i in range(word_length): #check for greens first
+    for i in range(0, word_length): #check for greens first
         if secret[i] == guess[i]:
             pattern[i] = "g"
             greens.append(i)
@@ -81,8 +81,6 @@ def compareWords(secret, guess):
                         pattern[i] = "y"
                         counts[1] += 1
                         yellows.append(index)
-                    else:
-                        pattern[i] = "b"
         else:
                 pattern[i] = "b"
                 counts[2] += 1
@@ -116,7 +114,7 @@ def getMessage(won, lost):
         return playing_messsages[random.randint(0, len(playing_messsages)-1)]
 
 
-
+#for testing without ui
 # while True:
 
 #     guess = input("word guess:")

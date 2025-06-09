@@ -1,5 +1,5 @@
 <h4 class="text-center">Wordle, but it doesn't like you very much.</h4>
-<a src="https://fluffyponyy.itch.io/nordle"> Itch.io link </a>
+<a href="https://fluffyponyy.itch.io/nordle"> Itch.io link </a>
 <p class="text-center">Submission for Besties Game Jam 2025, with theme:&nbsp;"Make me feel an emotion." (target emotion: <strong>anger</strong>)</p>
 <h3 class="text-center">How to Play</h3>
 <p>Enter a guess for the secret word. Correct&nbsp;letters in correct positions&nbsp;appear in hot pink, correct letters in the wrong position appear in yellow, and letters that are not in the secret word appear in grey. You can play again after inputting 6 guesses by pressing "enter". If you fail in 6 guesses, you can also view all or some of the remaining possible words.</p>

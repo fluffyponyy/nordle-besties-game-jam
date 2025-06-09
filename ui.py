@@ -1,5 +1,6 @@
 import pygame
 import nordle
+import random
 
 pygame.init()
 
@@ -49,6 +50,7 @@ class WordleUI:
         self.current_attempt = 0
         self.current_char_index = 0
         self.message = ""
+        self.possible_words = ""
         self.is_game_over = False
         self.original_candidates = open("word_lists/wordle-candidates.txt").read().split('\n')
         self.candidates = self.original_candidates
@@ -142,6 +144,17 @@ class WordleUI:
             is_game_over=formatted_results["game_over"]
         )
 
+        candidates_len = len(self.candidates)
+        if is_game_over_lose: 
+            if candidates_len == 1:
+                self.possible_words = "Word was: " + self.candidates[0]
+            elif candidates_len == 2:
+                self.possible_words = "Words left: " + self.candidates[0] + ", " + self.candidates[1]
+            else:
+                randomIndexA = random.randint(0, candidates_len-1)
+                randomIndexB = random.randint(0, candidates_len-1)
+                self.possible_words = "Words left included: " + self.candidates[randomIndexA] + ", " + self.candidates[randomIndexB]
+
     def update_ui_from_backend(self, tile_colors, keyboard_updates, message, is_game_over):
         """Helper function to update all UI elements based on backend results."""
         self.tile_colors[self.current_attempt] = tile_colors
@@ -149,7 +162,10 @@ class WordleUI:
         # Update keyboard colors based on the new information, except if the information is a downgrade
         for pair in keyboard_updates:
             letter, color = pair[0], pair[1]
-            if self.keyboard_colors[letter] == GREY or (self.keyboard_colors[letter] == YELLOW and color == GREEN):
+            print(letter, color)
+
+            cur_color = self.keyboard_colors[letter]
+            if cur_color == GREY or cur_color == DARK_GREY or (cur_color == YELLOW and color == GREEN):
                 self.keyboard_colors[letter] = color
             
         self.message = message
@@ -159,6 +175,7 @@ class WordleUI:
         if not self.is_game_over:
             self.current_attempt += 1
             self.current_char_index = 0
+        
             
     def reset_game(self):
         """Resets the UI to its initial state for a new game."""
@@ -174,6 +191,7 @@ class WordleUI:
         self.current_attempt = 0
         self.current_char_index = 0
         self.message = ""
+        self.possible_words = ""
         self.is_game_over = False
 
 # drawing functions
@@ -223,4 +241,9 @@ def draw_header_and_messages(screen, ui):
     if ui.message:
         msg_surface = KEYBOARD_FONT.render(ui.message, True, WHITE)
         msg_rect = msg_surface.get_rect(center=(SCREEN_WIDTH // 2, GRID_START_Y + 365))
+        screen.blit(msg_surface, msg_rect)
+    
+    if ui.possible_words:
+        msg_surface = KEYBOARD_FONT.render(ui.possible_words, True, WHITE)
+        msg_rect = msg_surface.get_rect(center=(SCREEN_WIDTH // 2, GRID_START_Y + 565))
         screen.blit(msg_surface, msg_rect)
